@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, MessageCircleQuestion, Send, Star, X } from 'lucide-react';
 import { useAuth } from '../auth.jsx';
 import { destinations as destinationsApi } from '../data.js';
-import { SUGGESTIONS, answer, roleOf } from '../lib/assistant.js';
+import { MORE_TOPICS_LABEL, SUGGESTIONS, answer, roleOf } from '../lib/assistant.js';
 import { CategoryIcon, peso } from './ui.jsx';
 import logoMark from '../assets/logo.webp';
 
@@ -11,7 +11,7 @@ const greeting = (user) => ({
   from: 'bot',
   text: user
     ? `Hi ${user.name.split(' ')[0]}! I can help with anything about this site. What would you like to know?`
-    : 'Hi! I can answer questions about this site: destinations, booking, cancelling and feedback. What would you like to know?',
+    : 'Hi! I can answer questions about this site: destinations, booking, cancelling, feedback and your account. What would you like to know?',
   suggest: true,
 });
 
@@ -43,9 +43,11 @@ function BotMessage({ m, onPick, suggestions }) {
           {m.links.map((l) => <Link key={l.to} to={l.to}>{l.label} <ArrowRight size={13} aria-hidden="true" /></Link>)}
         </div>
       )}
-      {m.suggest && (
+      {(m.suggestions || m.suggest) && (
         <div className="chat-suggest">
-          {suggestions.map((s) => <button key={s} type="button" onClick={() => onPick(s)}>{s}</button>)}
+          {(m.suggestions || suggestions).map((s) => (
+            <button key={s} type="button" className={s === MORE_TOPICS_LABEL ? 'more' : ''} onClick={() => onPick(s)}>{s}</button>
+          ))}
         </div>
       )}
     </div>

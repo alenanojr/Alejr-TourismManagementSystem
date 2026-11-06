@@ -69,3 +69,27 @@ test('unrelated questions get the scoped fallback', () => {
 test('list questions before destinations load ask to retry', () => {
   assert.match(answer('beaches', { destinations: null }).text, /Loading destinations/);
 });
+
+test('new FAQ topics answer booking, account and review questions', () => {
+  assert.match(ask('pwede ba palitan date ng booking ko', tourist).text, /cancel the trip in My Bookings and book again/);
+  assert.match(ask('how many guests can I book?').text, /1 to 50 guests/);
+  assert.match(ask('can I book today?').text, /today or any future date/);
+  assert.match(ask('bakit nawala account ko').text, /7 days after its email is confirmed/);
+  assert.match(ask('change my password').text, /no profile page yet/);
+  assert.match(ask('I did not get the confirmation email').text, /check Spam/);
+  assert.match(ask('5 stars but negative why').text, /star rating and the sentiment label are separate/);
+  assert.match(ask('is my email public').text, /first name and last initial/);
+  assert.match(ask('what does loved by visitors mean').text, /at least 3 reviews/);
+  assert.match(ask('libre ba').text, /free/);
+});
+
+test('admin-only booking status help stays hidden from tourists', () => {
+  assert.match(ask('mark booking as completed', admin).text, /status menu on each row/);
+  assert.doesNotMatch(ask('change status', tourist).text, /status menu on each row/);
+});
+
+test('count questions are answered from the live list', () => {
+  assert.equal(ask('how many destinations are there').text, 'There are 4 destinations on the site: 1 in Luzon, 2 in Visayas, 1 in Mindanao.');
+  assert.equal(ask('how many beaches in Visayas').text, 'There is 1 beach in Visayas on the site.');
+  assert.match(ask('how many guests can I book?').text, /1 to 50 guests/);
+});
