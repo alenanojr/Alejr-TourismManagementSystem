@@ -1,0 +1,5 @@
+# Minimal Supabase CLI config – only what deploying the Edge Function needs.
+project_id = "visayas-tourism"
+
+[functions.submit-feedback]
+verify_jwt = true

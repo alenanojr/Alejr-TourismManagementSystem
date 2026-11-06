@@ -1,0 +1,2 @@
+-- The destinations catalogue (15 each for Luzon, Visayas and Mindanao) is created by
+-- migrations/20261103010000_nationwide_catalogue.sql, so there is nothing to seed here.
