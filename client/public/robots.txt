@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /bookings
+Disallow: /my-feedback
+
+Sitemap: https://alejr-tourismmanagementsystem.vercel.app/sitemap.xml
